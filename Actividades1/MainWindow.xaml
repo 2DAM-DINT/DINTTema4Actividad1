@@ -1,0 +1,115 @@
+﻿<Window x:Class="Actividades1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Actividades1"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="800"
+        Width="720"
+        Icon=".\recursos\meme.ico">
+
+    <Window.Resources>
+        <local:BorderConverter x:Key="conversorBoolAInt" />
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Width" Value="75" />
+        </Style>
+        
+        <Style TargetType="{x:Type TextBlock}" x:Key="textoMeme">
+            <Setter Property="FontFamily"
+                    Value="Impact" />
+            <Setter Property="FontSize"
+                    Value="36" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin"
+                    Value="5,0" />
+            <Setter Property="MinWidth"
+                    Value="570" />
+        </Style>
+
+        <Style TargetType="{x:Type DockPanel}">
+            <Setter Property="Margin"
+                    Value="0,5" />
+        </Style>
+
+        <Style TargetType="{x:Type Slider}">
+            <Setter Property="Width"
+                    Value="600" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+            <Setter Property="Minimum"
+                    Value="100" />
+            <Setter Property="Maximum"
+                    Value="1000" />
+            <Setter Property="Value"
+                    Value="500" />
+        </Style>
+    </Window.Resources>
+    
+    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
+                  Padding="5">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top">
+                <DockPanel>
+                    <TextBlock Text="Texto superior" />
+                    <TextBox Text="Texto superior"
+                             x:Name="textoSuperior" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Texto inferior" />
+                    <TextBox Text="Texto inferior"
+                             x:Name="textoInferior" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Alto" />
+                    <Slider x:Name="altoSlider" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Ancho" />
+                    <Slider x:Name="anchoSlider" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Imagen" />
+                    <TextBox x:Name="textoImagen" />
+                </DockPanel>
+                <DockPanel LastChildFill="False">
+                    <TextBlock Text="Borde" />
+                    <CheckBox IsChecked="True"
+                              Margin="5,0"
+                              x:Name="bordeCheckBox" />
+                </DockPanel>
+            </StackPanel>
+            <Border BorderThickness="{Binding ElementName=bordeCheckBox, Path=IsChecked, Converter={StaticResource conversorBoolAInt}}"
+                    Height="{Binding ElementName=altoSlider, Path=Value}"
+                    Width="{Binding ElementName=anchoSlider, Path=Value}"
+                    BorderBrush="Black"
+                    Background="LightPink">
+                <Grid>
+                    <Image Stretch="Fill"
+                           Source="{Binding ElementName=textoImagen, Path=Text}" />
+                    <TextBlock Style="{StaticResource textoMeme}"
+                               VerticalAlignment="Top"
+                               Text="{Binding ElementName=textoSuperior, Path=Text}" />
+
+                    <TextBlock Style="{StaticResource textoMeme}"
+                               VerticalAlignment="Bottom"
+                               Text="{Binding ElementName=textoInferior, Path=Text}" />
+                </Grid>
+            </Border>
+        </DockPanel>
+    </ScrollViewer>
+</Window>
